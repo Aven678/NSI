@@ -48,8 +48,6 @@ class Balle:
                 continue
 
             if self.distanceAB(balle.x,balle.y) < self.taille:
-                #self.dx,balle.dx = balle.dx,self.dx
-                #self.dy,balle.dy = balle.dy,self.dy
                 self.taille += 0.2
                 balle.alive = True
         
@@ -57,10 +55,8 @@ class Balle:
     def distanceAB(self, xB, yB):
         return ((xB-self.x)**2+(yB-self.y)**2)**0.5
 
-
-
-balles = [Balle() for x in range(int(input("Tu veux combien de balles ? ")))]
-print("Il y a",len(balles)," balles. ALLEZ ZÉ PARTI !")
+balles = [Balle() for x in range(500)]
+print("Il y a",len(balles)," balles à manger. ALLEZ ZÉ PARTI !")
 
 pygame.display.init()
 fenetre = pygame.display.set_mode((longueur, largeur))
@@ -74,10 +70,16 @@ main_balle.y = largeur/2
 main_balle.taille = 15
 main_balle.dx = 0
 main_balle.dy = 0
+main_balle.balles_eated = 0
 
 while True:
     fenetre.fill([255,255,255])
     main_balle.draw()
+    
+    if main_balle.balles_eated == len(balles):
+        print("Vous avez mangé toutes les balles")
+        pygame.display.quit()
+        sys.exit()
 
     for balle in balles:
         balle.draw()
