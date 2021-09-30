@@ -1,4 +1,5 @@
 def puissance(x,n):
+    assert n > 0, "attention n doit être positif"
     if n == 1:
         return x
     else:
@@ -14,3 +15,12 @@ def pgcd(a,b):
         return pgcd(b, a%b)
 
 print(pgcd(24,18))
+
+def syracuse(n):
+    if n == 1:
+        return n
+    else:
+        print(n)
+        return syracuse(n = n/2 if n%2==0 else n*3+1)
+
+print(syracuse(100))
