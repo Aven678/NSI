@@ -23,4 +23,4 @@ def fact_rec(n):
     else:
         return n * fact_rec(n-1)
 
-print(fact_rec(5)) 
+print(fact_rec(5))
