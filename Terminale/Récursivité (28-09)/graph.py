@@ -5,14 +5,20 @@ def carre(cote):
         forward(cote)
         right(90)
 
-def losange(cote):
+
+def motif(cote,n):
+    if n == 0:
+        return
+
+    carre(cote)
     forward(cote/2)
     right(45)
+    motif(cote/(2**0.5),n-1)
 
 penup()        
-goto(0,-80)
+goto(-80,-80)
 pendown()
 left(90)
-speed(0)
+speed(1)
 
-carre(250)
+motif(250,6)

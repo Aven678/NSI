@@ -16,11 +16,21 @@ def pgcd(a,b):
 
 print(pgcd(24,18))
 
-def syracuse(n):
-    if n == 1:
-        return n
-    else:
-        print(n)
-        return syracuse(n = n//2 if n%2==0 else n*3+1)
+def syracuse(n, vol=0):
+    vol += 1
 
-print(syracuse(100))
+    if n == 1:
+        return n, vol
+    else:
+        #print(n)
+        return syracuse(n//2 if n%2==0 else n*3+1,vol)
+
+best = 0
+n_best = 0
+for x in range(1,100):
+    n,vol = syracuse(x)
+    if best < vol:
+        best = vol
+        n_best = x
+
+print(best,n_best)
