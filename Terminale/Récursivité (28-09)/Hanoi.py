@@ -3,8 +3,8 @@ def hanoi(n, depart, inter, arrivee):
         print(depart,"vers",arrivee)
     else:
         hanoi(n-1,depart,arrivee,inter)
-        print(depart,"vers",inter)
-        hanoi(n-1, depart=inter, inter=depart, arrivee=arrivee)
+        print(depart,"vers",arrivee)
+        hanoi(n-1, inter, depart, arrivee)
 
 
-hanoi(10,"A","B","C")
+hanoi(4,"A","B","C")
