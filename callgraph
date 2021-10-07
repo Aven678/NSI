@@ -1,0 +1,5 @@
+digraph {
+	graph [fontname=helvetica label="nodes=0"]
+	node [fontname=helvetica]
+	edge [fontname=helvetica]
+}
