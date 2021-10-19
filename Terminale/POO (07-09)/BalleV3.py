@@ -19,13 +19,11 @@ class Balle:
         self.dy = randint(-10,10)
         self.couleur = np.random.choice(range(230), size=3)
         self.taille = taille
-        self.alive = False
     
     def draw(self):
-        if self.alive == False:
-            pygame.draw.circle(fenetre,self.couleur,(self.x,self.y),self.taille)
+        pygame.draw.circle(fenetre,self.couleur,(self.x,self.y),self.taille)
         
-    def avance(self, balles):        
+    def avance(self):        
         self.draw()
         
         if self.x < self.taille/2 or self.x > longueur - self.taille/2 :
@@ -37,19 +35,16 @@ class Balle:
         self.x += self.dx
         self.y += self.dy
         
-        self.collision(balles)
+        self.collision()
         
-    def collision(self, balles):
+    def collision(self):
         for balle in balles:
             if balle == self:
                 continue
-            
-            if balle.alive == True:
-                continue
-
+        
             if self.distanceAB(balle.x,balle.y) < self.taille:
                 self.taille += 0.2
-                balle.alive = True
+                balles.remove(balle)
         
     
     def distanceAB(self, xB, yB):
@@ -74,15 +69,15 @@ main_balle.balles_eated = 0
 
 while True:
     fenetre.fill([255,255,255])
+    for balle in balles:
+        balle.draw()
+
     main_balle.draw()
     
     if main_balle.balles_eated == len(balles):
         print("Vous avez mangé toutes les balles")
         pygame.display.quit()
         sys.exit()
-
-    for balle in balles:
-        balle.draw()
         
     pygame.display.update()
     
@@ -117,5 +112,11 @@ while True:
             pygame.display.quit()
             sys.exit()
             
-    main_balle.avance(balles)
-    time.sleep(0.05)
+    main_balle.avance()
+
+    if len(balles) < 500:
+        print("suce")
+        for i in range(500-len(balles)):
+            balles.append(Balle())
+
+    time.sleep(0.02)
