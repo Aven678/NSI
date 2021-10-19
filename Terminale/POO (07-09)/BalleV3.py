@@ -65,57 +65,56 @@ main_balle.y = largeur/2
 main_balle.taille = 15
 main_balle.dx = 0
 main_balle.dy = 0
-main_balle.balles_eated = 0
+
+def arret():
+    print("Fin du jeu, merci d'avoir joué")
+    pygame.display.quit()
+    sys.exit()
 
 while True:
     fenetre.fill([255,255,255])
+
+    if main_balle.taille >= longueur:
+        arret()
+
     for balle in balles:
         balle.draw()
 
     main_balle.draw()
-    
-    if main_balle.balles_eated == len(balles):
-        print("Vous avez mangé toutes les balles")
-        pygame.display.quit()
-        sys.exit()
         
     pygame.display.update()
     
     for event in pygame.event.get():
         if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
-                print("flèche droite appuyée")
+            if event.key == K_RIGHT or event.key == K_d:
                 if main_balle.dx <= 0:
                     main_balle.dx = 5
                     main_balle.dy = 0
 
-            elif event.key == K_UP:
-                print("flèche haute")
+            elif event.key == K_UP or event.key == K_z:
                 if main_balle.dy >= 0:
                     main_balle.dy = -5
                     main_balle.dx = 0
 
-            elif event.key == K_LEFT:
-                print("flèche gauche")
+            elif event.key == K_LEFT or event.key == K_q:
                 if main_balle.dx >= 0:
                     main_balle.dx = -5
                     main_balle.dy = 0
 
-            elif event.key == K_DOWN:
-                print("flèche bas")
+            elif event.key == K_DOWN or event.key == K_s:
                 if main_balle.dy <= 0:
                     main_balle.dy = 5
                     main_balle.dx = 0
 
+            elif event.key == K_ESCAPE:
+                arret()
+
         if event.type == pygame.QUIT:
-            print("Ah c'est la fin... Adieu.")
-            pygame.display.quit()
-            sys.exit()
+            arret()
             
     main_balle.avance()
 
     if len(balles) < 500:
-        print("suce")
         for i in range(500-len(balles)):
             balles.append(Balle())
 
