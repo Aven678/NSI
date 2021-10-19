@@ -4,14 +4,41 @@ class Cellule:
         self.link = link
 
 lst = Cellule(3, Cellule(5, Cellule(1,None)))
-print(lst.valeur)
-print(lst.link.valeur)
-print(lst.link.link.valeur)
+#print(lst.valeur)
+#print(lst.link.valeur)
+#print(lst.link.link.valeur)
 
-def oui(n, lst=Cellule(1,None)):
-    if n == 1:
-        return lst
-    else:
-        oui(n-1, Cellule(n, lst))
+class Pile:
+    def __init__(self) -> None:
+        self.data = []
 
-print(oui(10))
+    def est_vide(self):
+        return len(self.data) == 0
+
+    def empile(self, element):
+        self.data.append(element)
+    
+    def depile(self):
+        if self.est_vide() == True :
+            raise IndexError('Vous avez essayé de dépiler une pile vide !')
+        return self.data.pop()
+
+    def __str__(self) -> str:
+        if len(self.data) == 0:
+            return "None"
+
+        text = "|"
+        for i in self.data:
+            text += str(i)+"|"
+
+        return text
+
+    def __repr__(self) -> str:
+        if len(self.data) == 0:
+            return "None"
+
+        text = "|"
+        for i in self.data:
+            text += str(i)+"|"
+
+        return text
