@@ -4,10 +4,7 @@ class Cellule:
         self.link = link
 
 lst = Cellule(3, Cellule(5, Cellule(1,None)))
-#print(lst.valeur)
-#print(lst.link.valeur)
-#print(lst.link.link.valeur)
-
+ 
 class Pile:
     def __init__(self) -> None:
         self.data = []
