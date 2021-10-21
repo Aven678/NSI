@@ -10,20 +10,18 @@ longueur,largeur = 1040,980
 taille = 10
 
 class Balle:
-    def __init__(self):
-        
-        self.x = randint(5, longueur)
-        self.y = randint(5, largeur)
-        
-        self.dx = randint(-10,10)
-        self.dy = randint(-10,10)
-        self.couleur = np.random.choice(range(230), size=3)
-        self.taille = taille
+    def __init__(self, taille = None, couleur = None, x=None, y = None, dx = None, dy = None):
+        self.x = randint(5, longueur) if x == None else x
+        self.y = randint(5, longueur) if y == None else y
+        self.dx = dx if dx == None else dx
+        self.dy = dy if dy == None else dy
+        self.couleur = np.random.choice(range(230), size=3) if couleur == None else couleur
+        self.taille = 10 if taille == None else taille
     
     def draw(self):
         pygame.draw.circle(fenetre,self.couleur,(self.x,self.y),self.taille)
         
-    def avance(self):        
+    def avance(self):     #Uniquement utilisé par la balle contrôlée par l'utilisateur   
         self.draw()
         
         if self.x < self.taille/2 or self.x > longueur - self.taille/2 :
@@ -45,26 +43,29 @@ class Balle:
             if self.distanceAB(balle.x,balle.y) < self.taille:
                 self.taille += 0.2
                 balles.remove(balle)
+
+        for boule in boules_noires:
+            if self.distanceAB(boule.x,boule.y) < self.taille:
+                self.taille = self.taille//2
+                boules_noires.remove(boule)
         
     
     def distanceAB(self, xB, yB):
         return ((xB-self.x)**2+(yB-self.y)**2)**0.5
 
+
 balles = [Balle() for x in range(500)]
+boules_noires = [Balle(15, (0,0,0)) for x in range(10)]
+
+balle_joueur = Balle(15,(255,0,0), longueur/2, largeur/2, 0, 0)
+
 print("Il y a",len(balles)," balles à manger. ALLEZ ZÉ PARTI !")
+print("Attention aux boules noires !")
 
 pygame.display.init()
 fenetre = pygame.display.set_mode((longueur, largeur))
 fenetre.fill([0,0,0])
 
-
-main_balle = Balle()
-main_balle.couleur = (255,0,0)
-main_balle.x = longueur/2
-main_balle.y = largeur/2
-main_balle.taille = 15
-main_balle.dx = 0
-main_balle.dy = 0
 
 def arret():
     print("Fin du jeu, merci d'avoir joué")
@@ -74,45 +75,48 @@ def arret():
 while True:
     fenetre.fill([255,255,255])
 
-    if main_balle.taille >= longueur:
+    if balle_joueur.taille >= longueur:
         arret()
 
     for balle in balles:
         balle.draw()
 
-    main_balle.draw()
+    for boule in boules_noires:
+        boule.draw()
+
+    balle_joueur.draw()
         
     pygame.display.update()
     
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             if event.key == K_RIGHT or event.key == K_d:
-                if main_balle.dx <= 0:
-                    main_balle.dx = 5
-                    main_balle.dy = 0
+                pygame.key.set_repeat(40)
+                if balle_joueur.x < longueur + balle_joueur.taille:
+                    balle_joueur.x += 5
 
-            elif event.key == K_UP or event.key == K_z:
-                if main_balle.dy >= 0:
-                    main_balle.dy = -5
-                    main_balle.dx = 0
+            if event.key == K_UP or event.key == K_z:
+                pygame.key.set_repeat(40)
+                if balle_joueur.y > 0 + balle_joueur.taille:
+                    balle_joueur.y += -5
 
-            elif event.key == K_LEFT or event.key == K_q:
-                if main_balle.dx >= 0:
-                    main_balle.dx = -5
-                    main_balle.dy = 0
+            if event.key == K_LEFT or event.key == K_q:
+                pygame.key.set_repeat(40)
+                if balle_joueur.x > 0 + balle_joueur.taille:
+                    balle_joueur.x += -5
 
-            elif event.key == K_DOWN or event.key == K_s:
-                if main_balle.dy <= 0:
-                    main_balle.dy = 5
-                    main_balle.dx = 0
+            if event.key == K_DOWN or event.key == K_s:
+                pygame.key.set_repeat(40)
+                if balle_joueur.y < largeur + balle_joueur.taille:
+                    balle_joueur.y += 5
 
-            elif event.key == K_ESCAPE:
+            if event.key == K_ESCAPE:
                 arret()
 
         if event.type == pygame.QUIT:
             arret()
             
-    main_balle.avance()
+    balle_joueur.avance()
 
     if len(balles) < 500:
         for i in range(500-len(balles)):
