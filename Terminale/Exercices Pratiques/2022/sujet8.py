@@ -6,6 +6,7 @@ def recherche(elt, tab):
 
     return -1
 
+#Ex 8.2
 def insere(a, tab):
     l = list(tab) #l contient les mêmes éléments que tab
     l.append(a)
