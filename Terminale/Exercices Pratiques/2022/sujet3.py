@@ -1,11 +1,11 @@
-#Ex 1
+#Ex 3.1
 def delta(tab):
     result = [tab[0]]
     for i in range(1, len(tab)):
         result.append(tab[i]-tab[i-1])
     return result
 
-#Ex 2
+#Ex 3.2
 class Noeud:
     def __init__(self, g, v, d):
         self.gauche = g
