@@ -1,4 +1,4 @@
-#Ex 1
+#Ex 2.1
 def moyenne(notes):
     sum_coef = 0
     sum_notes = 0
@@ -12,7 +12,7 @@ def moyenne(notes):
 
     return sum_notes/sum_coef
 
-#Ex 2
+#Ex 2.2
 def pascal(n):
     C= [[1]]
     for k in range(1,n+1):
