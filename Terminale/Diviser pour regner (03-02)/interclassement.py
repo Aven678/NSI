@@ -15,3 +15,9 @@ def interclassement(lst1, lst2):
 
     return lst_totale + lst1[i1:] + lst2[i2:]
     
+def tri_fusion(lst):
+    if len(lst) <= 1:
+        return lst
+
+    n = len(lst)//2
+    return interclassement(tri_fusion(lst[:n]), tri_fusion(lst[n:]))
